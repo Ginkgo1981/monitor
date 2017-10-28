@@ -1,10 +1,10 @@
 class SlackService
   def self.alert text
-    url = 'https://hooks.slack.com/services/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'
+    url = 'https://hooks.slack.com/services/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' #play
     payload = {
-        text: text
+        text: "#{Time.now.to_s} - #{text}"
     }
     res = Faraday.post url,JSON.generate(payload)
-    puts "[SlackService] alert res: #{res.body}"
+    puts "[SlackService] monitor res: #{res.body}"
   end
 end

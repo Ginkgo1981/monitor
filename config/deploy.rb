@@ -3,18 +3,19 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
 require 'mina/rails'
-require 'mina/whenever'
+require 'mina/rvm'
+# require 'mina/whenever'
 
-set :domain, '119.9.91.75'
-set :application, 'loop-alert'
+set :domain, '139.224.65.151'
+set :application, 'monitor'
 set :user, 'deploy'
 set :deploy_to, "/home/#{user}/apps/#{application}"
-set :repository, 'git@github.com:SkyMatters/loop-alert.git'
+set :repository, 'git@github.com:Ginkgo1981/monitor.git'
 set :branch, 'master'
 
+set :rvm_path, '/usr/share/rvm/bin/rvm'
 task :environment do
-  invoke :'rbenv:load'
-  queue 'source ~/.bash_profile'
+  invoke :'rvm:use[ruby-2.3.1@default]'
 end
 
 set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
@@ -42,7 +43,7 @@ task deploy: :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    invoke :'whenever:update'
+    # invoke :'whenever:update'
     invoke :'deploy:cleanup'
     to :launch do
     end
